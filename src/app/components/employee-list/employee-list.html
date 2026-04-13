@@ -1,0 +1,145 @@
+<!-- Top Toolbar -->
+<mat-toolbar color="primary" class="toolbar">
+  <mat-icon>business</mat-icon>
+  <span class="toolbar-title">Employee Management</span>
+  <span class="spacer"></span>
+  <span class="user-info">
+    <mat-icon>account_circle</mat-icon>
+  </span>
+  <button mat-button (click)="logout()">
+    <mat-icon>logout</mat-icon> Logout
+  </button>
+</mat-toolbar>
+
+<div class="page-content">
+
+  <!-- Header Row -->
+  <div class="page-header">
+    <h1>All Employees</h1>
+    <button mat-raised-button color="accent" routerLink="/employees/add">
+      <mat-icon>add</mat-icon> Add Employee
+    </button>
+  </div>
+
+  <!-- Search Bar -->
+  <mat-card class="search-card">
+    <mat-card-content>
+      <div class="search-row">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Search by Department</mat-label>
+          <mat-icon matPrefix>domain</mat-icon>
+          <input matInput [(ngModel)]="searchDept" placeholder="e.g. Engineering">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Search by Position</mat-label>
+          <mat-icon matPrefix>work</mat-icon>
+          <input matInput [(ngModel)]="searchPos" placeholder="e.g. Manager">
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="onSearch()" [disabled]="isSearching">
+          <mat-icon>search</mat-icon> Search
+        </button>
+
+        <button mat-stroked-button (click)="clearSearch()">
+          <mat-icon>clear</mat-icon> Clear
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Loading -->
+  <div class="loading-container" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+    <p>Loading employees...</p>
+  </div>
+
+  <!-- Table -->
+  <mat-card *ngIf="!loading" class="table-card">
+    <mat-card-content>
+      <p class="results-count">
+        Showing {{ filteredEmployees.length }} employee(s)
+      </p>
+
+      <table mat-table [dataSource]="filteredEmployees" class="employee-table">
+
+        <!-- Avatar Column -->
+        <ng-container matColumnDef="avatar">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let e">
+            <div class="avatar" *ngIf="!e.profilePicture">
+              {{ getInitials(e.firstName, e.lastName) }}
+            </div>
+            <img class="avatar-img" *ngIf="e.profilePicture"
+              [src]="e.profilePicture" [alt]="e.firstName">
+          </td>
+        </ng-container>
+
+        <!-- Name -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let e">
+            <strong>{{ e.firstName }} {{ e.lastName }}</strong>
+          </td>
+        </ng-container>
+
+        <!-- Email -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let e">{{ e.email }}</td>
+        </ng-container>
+
+        <!-- Department -->
+        <ng-container matColumnDef="department">
+          <th mat-header-cell *matHeaderCellDef>Department</th>
+          <td mat-cell *matCellDef="let e">
+            <span class="chip">{{ e.department }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Designation -->
+        <ng-container matColumnDef="designation">
+          <th mat-header-cell *matHeaderCellDef>Position</th>
+          <td mat-cell *matCellDef="let e">{{ e.designation }}</td>
+        </ng-container>
+
+        <!-- Salary -->
+        <ng-container matColumnDef="salary">
+          <th mat-header-cell *matHeaderCellDef>Salary</th>
+          <td mat-cell *matCellDef="let e">
+            {{ e.salary | salaryFormat }}
+          </td>
+        </ng-container>
+
+        <!-- Actions -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let e">
+            <button mat-icon-button color="primary"
+              [routerLink]="['/employees/view', e._id]"
+              matTooltip="View Details">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button color="accent"
+              [routerLink]="['/employees/edit', e._id]"
+              matTooltip="Edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn"
+              (click)="delete(e._id)"
+              matTooltip="Delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+      </table>
+
+      <p *ngIf="filteredEmployees.length === 0" class="no-results">
+        No employees found.
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>

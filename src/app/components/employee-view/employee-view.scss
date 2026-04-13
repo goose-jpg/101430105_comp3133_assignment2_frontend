@@ -1,0 +1,124 @@
+.page-content {
+  padding: 2rem;
+  max-width: 700px;
+  margin: 0 auto;
+  background-color: #121212;
+  min-height: calc(100vh - 64px);
+}
+
+.profile-card {
+  background-color: #1e1e1e !important;
+  border: 1px solid #2c2c2c;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  overflow: hidden;
+}
+
+.profile-header {
+  text-align: center;
+  padding: 2.5rem 2rem;
+  background-color: #1a2744;
+  border-bottom: 1px solid #2c2c2c;
+
+  h2 {
+    margin: 1rem 0 0.25rem;
+    font-size: 1.6rem;
+    color: #ffffff;
+  }
+
+  .designation {
+    margin: 0;
+    color: #9e9e9e;
+    font-size: 0.95rem;
+  }
+}
+
+.avatar-large {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #1565c0;
+  color: #90caf9;
+  font-size: 2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  border: 3px solid #2c2c2c;
+}
+
+.avatar-large-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #2c2c2c;
+}
+
+.dept-badge {
+  display: inline-block;
+  background: #1a3a5c;
+  color: #90caf9;
+  padding: 4px 16px;
+  border-radius: 12px;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+
+  mat-icon { color: #90caf9; margin-top: 2px; }
+
+  label {
+    font-size: 0.75rem;
+    color: #9e9e9e;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+
+  p {
+    margin: 0;
+    font-weight: 500;
+    color: #e0e0e0;
+  }
+}
+
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 1rem 2rem 2rem;
+
+  button[mat-stroked-button] {
+    color: #9e9e9e !important;
+    border-color: #3c3c3c !important;
+  }
+
+  button[mat-raised-button] {
+    background-color: #90caf9 !important;
+    color: #121212 !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+  }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  background-color: #121212;
+}

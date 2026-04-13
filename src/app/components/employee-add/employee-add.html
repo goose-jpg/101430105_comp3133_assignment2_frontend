@@ -1,0 +1,89 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button routerLink="/employees">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span>Add New Employee</span>
+</mat-toolbar>
+
+<div class="page-content">
+  <mat-card class="form-card">
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <!-- Profile Picture Upload -->
+        <div class="photo-section">
+          <div class="photo-preview">
+            <img *ngIf="previewUrl" [src]="previewUrl" alt="Preview">
+            <mat-icon *ngIf="!previewUrl">person</mat-icon>
+          </div>
+          <label class="upload-label" for="photo-input">
+            <mat-icon>upload</mat-icon> Upload Photo
+          </label>
+          <input id="photo-input" type="file" accept="image/*"
+            (change)="onFileChange($event)" hidden>
+        </div>
+
+        <!-- Two-column form grid -->
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName">
+            <mat-error *ngIf="f['firstName'].hasError('required')">Required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName">
+            <mat-error *ngIf="f['lastName'].hasError('required')">Required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email">
+            <mat-error *ngIf="f['email'].hasError('required')">Required</mat-error>
+            <mat-error *ngIf="f['email'].hasError('email')">Invalid email</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Gender</mat-label>
+            <mat-select formControlName="gender">
+              <mat-option *ngFor="let g of genders" [value]="g">{{ g }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="f['gender'].hasError('required')">Required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Job Title / Designation</mat-label>
+            <input matInput formControlName="designation">
+            <mat-error *ngIf="f['designation'].hasError('required')">Required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Department</mat-label>
+            <mat-select formControlName="department">
+              <mat-option *ngFor="let d of departments" [value]="d">{{ d }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="f['department'].hasError('required')">Required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Salary (CAD)</mat-label>
+            <mat-icon matPrefix>attach_money</mat-icon>
+            <input matInput formControlName="salary" type="number" min="0">
+            <mat-error *ngIf="f['salary'].hasError('required')">Required</mat-error>
+            <mat-error *ngIf="f['salary'].hasError('min')">Must be positive</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <button mat-stroked-button type="button" routerLink="/employees">Cancel</button>
+          <button mat-raised-button color="primary" type="submit"
+            [disabled]="form.invalid || loading">
+            {{ loading ? 'Saving...' : 'Add Employee' }}
+          </button>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

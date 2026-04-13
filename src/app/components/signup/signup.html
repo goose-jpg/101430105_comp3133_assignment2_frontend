@@ -1,0 +1,55 @@
+<div class="page-container">
+  <mat-card class="auth-card">
+    <mat-card-header>
+      <div class="card-header-content">
+        <mat-icon class="header-icon">person_add</mat-icon>
+        <mat-card-title>Create Account</mat-card-title>
+        <mat-card-subtitle>Join Employee Management</mat-card-subtitle>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username">
+          <mat-error *ngIf="f['username'].hasError('required')">Required</mat-error>
+          <mat-error *ngIf="f['username'].hasError('minlength')">Min 3 characters</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email">
+          <mat-error *ngIf="f['email'].hasError('required')">Required</mat-error>
+          <mat-error *ngIf="f['email'].hasError('email')">Enter a valid email</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password">
+          <mat-error *ngIf="f['password'].hasError('minlength')">Min 6 characters</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput formControlName="confirm" type="password">
+          <mat-error *ngIf="form.hasError('mismatch')">Passwords do not match</mat-error>
+        </mat-form-field>
+
+        <div class="error-banner" *ngIf="error">
+          <mat-icon>error</mat-icon> {{ error }}
+        </div>
+
+        <button mat-raised-button color="primary" type="submit"
+          class="full-width submit-btn" [disabled]="form.invalid || loading">
+          {{ loading ? 'Creating account...' : 'Sign Up' }}
+        </button>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions class="card-footer">
+      <p>Already have an account? <a routerLink="/login">Login here</a></p>
+    </mat-card-actions>
+  </mat-card>
+</div>
