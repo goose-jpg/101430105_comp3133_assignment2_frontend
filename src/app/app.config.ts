@@ -29,7 +29,7 @@ export const appConfig: ApplicationConfig = {
 
       return {
         link: authMiddleware.concat(
-          httpLink.create({ uri: 'http://localhost:5000/graphql' })
+          httpLink.create({ uri: 'https://one01430105-comp3133-assignment2-backend.onrender.com' })
         ),
         cache: new InMemoryCache()
       };
